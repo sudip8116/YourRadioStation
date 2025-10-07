@@ -34,6 +34,7 @@ class BackgroundManager:
 
     def get_random_background(self):
         self.current_background_index = randint(1, self.max_back_count)
+        os.environ["bi"] = str(self.current_background_index)
 
     def start(self):
         Thread(target=self.update, daemon=True).start()

@@ -41,17 +41,11 @@ class Song:
     def set_start_time(self, mod: int):
         self.start_time["t"] = time() % mod
         self.start_time["mod"] = mod
-        self.save_start_time()
+        os.environ["position"] = json.dumps(self.start_time)
 
     def save_start_time(self):
         with open("save-data.json", "w") as f:
             f.write(json.dumps(self.start_time))
-
-    def get_formatted_duration(self):
-        """Return duration in MM:SS format"""
-        minutes = self.duration // 60
-        seconds = self.duration % 60
-        return f"{minutes:02d}:{seconds:02d}"
 
 
 class AudioPlayer:
@@ -66,7 +60,7 @@ class AudioPlayer:
         self.current_time = 0
         self.lock = Lock()  # Thread safety for shared variables
         self.playback_callbacks = []
-    
+
     def start(self):
         """Start the audio player thread"""
         if self.time_thread and self.time_thread.is_alive():
@@ -115,6 +109,7 @@ class AudioPlayer:
                 self.current_song = Song(song)
                 self.current_song.set_start_time(self.mod)
                 self.current_song_index = randint(1111, 9999)
+                os.environ["si"] = str(self.current_song_index)
                 self.current_time = 0
                 logger.info(f"Song started at {self.current_song.start_time}")
                 self._notify_callbacks(
