@@ -9,15 +9,18 @@ from pathlib import Path
 BASE_DIR = Path(__name__).resolve().parent
 AUTH_KEY = "3f9a7b2c1d8e4f6a0b9c2d7e8f1a3b"
 
-blank_data = {"t": 0, "mod": 1}
-with open("save-data.json", "w") as file:
-    file.write(json.dumps(blank_data))
+time_data = {"t": 0, "mod": 1}
+index_data = {"bi": 1, "si": 0}
+time_file = "save-data.json"
+index_file = "save-index.json"
+with open(time_file, "w") as file:
+    file.write(json.dumps(time_data))
+with open(index_file, "w") as file:
+    file.write(json.dumps(index_data))
 
 app = Flask(__name__, static_url_path="/static")
 audioManager = AudioManager(BASE_DIR)
 backgroundManager = BackgroundManager(BASE_DIR, 100)
-print(backgroundManager.background_path)
-
 audioPlayer = AudioPlayer(audioManager)
 audioPlayer.start()
 backgroundManager.start()
@@ -100,19 +103,19 @@ def get_song():
 @app.route("/get-position")
 def get_position():
     try:
-        with open("save-data.json", "r") as fi:
+        with open(time_file, "r") as fi:
             return Response(fi.read(), mimetype="application/json")
     except:
-        return jsonify(blank_data)
+        return jsonify(time_data)
+
 
 @app.route("/get-additional-data")
 def get_additional_data():
-    return jsonify(
-        {
-            "bi": backgroundManager.current_background_index,
-            "si": audioPlayer.current_song_index,
-        }
-    )
+    try:
+        with open(index_file, "r") as fi:
+            return Response(fi.read(), mimetype="application/json")
+    except:
+        return jsonify(time_data)
 
 
 # if __name__ == "__main__":
