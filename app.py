@@ -85,8 +85,10 @@ def restart_player():
 @app.route("/get-song")
 def get_song():
     if audioPlayer.current_song:
+        print("current song request success")
         return Response(audioPlayer.current_song.song_json, mimetype="application/json")
     else:
+        print("current song request failed")
         return jsonify({"error": True})
 
 
@@ -105,5 +107,5 @@ def get_additional_data():
     )
 
 
-if __name__ == "__main__":
-    app.run("0.0.0.0", debug=True)
+#if __name__ == "__main__":
+#    app.run("0.0.0.0", debug=True)

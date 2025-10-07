@@ -73,6 +73,7 @@ class AudioPlayer:
             target=self.__start_thread, daemon=True, name="AudioPlayerThread"
         )
         self.time_thread.start()
+        self.load_song()
         logger.info("Audio player started")
 
     def stop(self):
@@ -99,7 +100,6 @@ class AudioPlayer:
         self.playing_index = 0
         self.stop()
         self.start()
-        self.load_song()
 
     def load_song(self):
         """Load a song at the current playing index"""
