@@ -9,19 +9,36 @@ from pathlib import Path
 BASE_DIR = Path(__name__).resolve().parent
 AUTH_KEY = "3f9a7b2c1d8e4f6a0b9c2d7e8f1a3b"
 
-# time_data = {"t": 0, "mod": 1}
-# index_data = {"bi": 1, "si": 0}
-# time_file = "save-data.json"
-# index_file = "save-index.json"
-# with open(time_file, "w") as file:
-#     file.write(json.dumps(time_data))
-# with open(index_file, "w") as file:
-#     file.write(json.dumps(index_data))
+
+class Data:
+    def __init__(self, file: str, default: dict):
+
+        self.default = json.dumps(default)
+        self.file = file
+        with open(file, "w") as f:
+            f.write(self.default)
+
+    def write(self, value):
+        with open(self.file, "w") as f:
+            f.write(value)
+
+    def read(self):
+        try:
+            with open(self.file, "r") as f:
+                return f.read()
+        except:
+            return self.default
+
 
 app = Flask(__name__, static_url_path="/static")
+pos_data = Data("pos-data.json", {"t": 0, "mod": 1})
+back_index_data = Data("back-index.josn", {"bi": 1})
+song_index_data = Data("song-index.json", {"si": 0})
+
+
 audioManager = AudioManager(BASE_DIR)
-backgroundManager = BackgroundManager(BASE_DIR, 100)
-audioPlayer = AudioPlayer(audioManager)
+backgroundManager = BackgroundManager(back_index_data, BASE_DIR, 100)
+audioPlayer = AudioPlayer(pos_data, song_index_data, audioManager)
 audioPlayer.start()
 backgroundManager.start()
 
@@ -102,15 +119,17 @@ def get_song():
 
 @app.route("/get-position")
 def get_position():
-    return Response(
-        os.getenv("position", json.dumps({"t": 0, "mod": 1})),
-        mimetype="application/json",
-    )
+    return Response(pos_data.read(), mimetype="application/json")
 
 
-@app.route("/get-additional-data")
-def get_additional_data():
-    return jsonify({"bi": int(os.getenv("bi", "1")), "si": int(os.getenv("si", "0"))})
+@app.route("/get-song-index")
+def get_song_index():
+    return Response(song_index_data.read(), mimetype="application/json")
+
+
+@app.route("/get-background-index")
+def get_background_index():
+    return Response(back_index_data.read(), mimetype="application/json")
 
 
 # if __name__ == "__main__":

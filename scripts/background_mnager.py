@@ -1,3 +1,4 @@
+import json
 import os
 from random import randint
 from threading import Thread
@@ -5,7 +6,8 @@ from time import sleep
 
 
 class BackgroundManager:
-    def __init__(self, base_dir, update_delay=60):
+    def __init__(self, data, base_dir, update_delay=60):
+        self.data = data
         self.background_path = base_dir / "static/images/background/"
         self.max_back_count = 0
         self.current_background_index = 0
@@ -34,7 +36,7 @@ class BackgroundManager:
 
     def get_random_background(self):
         self.current_background_index = randint(1, self.max_back_count)
-        os.environ["bi"] = str(self.current_background_index)
+        self.data.write(json.dumps({"bi": self.current_background_index}))
 
     def start(self):
         Thread(target=self.update, daemon=True).start()
