@@ -166,16 +166,24 @@ class BarAnimation {
   }
 }
 
-function fetch_server_data() {
-  fetch("/get-additional-data")
+function fetch_song_index() {
+  fetch("/get-song-index")
+    .then((res) => res.json())
+    .then((data) => {
+      player.update_song_index(data.si);
+    });
+}
+function fetch_background_index() {
+  fetch("/get-background-index")
     .then((res) => res.json())
     .then((data) => {
       backgroundChanger.changeBackground(data.bi);
-      player.update_song_index(data.si);
     });
 }
 
 const player = new MusicPlayer();
 const backgroundChanger = new BackgroundChanger();
-fetch_server_data();
-setInterval(fetch_server_data, 5000);
+fetch_background_index();
+fetch_song_index();
+setInterval(fetch_song_index, 3000);
+setInterval(fetch_background_index, 100000);
