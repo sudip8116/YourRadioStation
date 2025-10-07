@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Radio Station</title>
+    <!-- Basic favicon -->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+      type="image/x-icon"
+    />
+
+    <!-- For modern browsers -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
+    <!-- For Apple devices -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
+    <!-- For Android devices -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link rel="stylesheet" href="/static/css/index.css" />
+  </head>
+  <body>
+    <div class="debug" style="position: absolute; top: 0; left: 0; z-index: 10">
+      <p id="debug-text" style="color: red; font-size: 30px"></p>
+    </div>
+
+    <div class="cover"></div>
+    <div id="bar-anim">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div id="player" class="center-col">
+      <div id="pt" class="center-row">
+        <div id="ptl">
+          <div class="album-art" id="album-art"></div>
+        </div>
+
+        <div id="ptr" class="center-col">
+          <div id="ptrt"><h2 id="song-title">Loading...</h2></div>
+          <div id="ptrb">
+            <div class="controls">
+              <button class="btn" id="play-pause">▶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="pb" class="center-row">
+        <input
+          type="range"
+          id="progress"
+          min="0"
+          max="100"
+          value="0"
+          readonly
+        />
+        <span id="total-time" class="time-label">00:00/00:00</span>
+      </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script src="/static/js/index.js"></script>
+  </body>
+</html>
