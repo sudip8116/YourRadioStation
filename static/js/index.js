@@ -67,11 +67,7 @@ class MusicPlayer {
   }
 
   syncAudio() {
-<<<<<<< HEAD
     fetch("/get-position", { cache: "no-store" })
-=======
-    fetch("/get-position" , { cache: "no-store" })
->>>>>>> 9cbbe3382b02a9890e7dd2528045d1303f782e4e
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
