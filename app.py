@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, Response, send_from_directory
 from flask import render_template, request, jsonify
@@ -8,9 +9,13 @@ from pathlib import Path
 BASE_DIR = Path(__name__).resolve().parent
 AUTH_KEY = "3f9a7b2c1d8e4f6a0b9c2d7e8f1a3b"
 
+blank_data = {"t": 0, "mod": 1}
+with open("save-data.json", "w") as file:
+    file.write(json.dumps(blank_data))
+
 app = Flask(__name__, static_url_path="/static")
 audioManager = AudioManager(BASE_DIR)
-backgroundManager = BackgroundManager(BASE_DIR,  100)
+backgroundManager = BackgroundManager(BASE_DIR, 100)
 print(backgroundManager.background_path)
 
 audioPlayer = AudioPlayer(audioManager)
@@ -94,8 +99,11 @@ def get_song():
 
 @app.route("/get-position")
 def get_position():
-    return jsonify(audioPlayer.get_current_time())
-
+    try:
+        with open("save-data.json", "r") as fi:
+            return Response(fi.read(), mimetype="application/json")
+    except:
+        return jsonify(blank_data)
 
 @app.route("/get-additional-data")
 def get_additional_data():
@@ -107,5 +115,5 @@ def get_additional_data():
     )
 
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    app.run("0.0.0.0", debug=True)

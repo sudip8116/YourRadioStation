@@ -41,6 +41,11 @@ class Song:
     def set_start_time(self, mod: int):
         self.start_time["t"] = time() % mod
         self.start_time["mod"] = mod
+        self.save_start_time()
+
+    def save_start_time(self):
+        with open("save-data.json", "w") as f:
+            f.write(json.dumps(self.start_time))
 
     def get_formatted_duration(self):
         """Return duration in MM:SS format"""
@@ -61,7 +66,7 @@ class AudioPlayer:
         self.current_time = 0
         self.lock = Lock()  # Thread safety for shared variables
         self.playback_callbacks = []
-
+    
     def start(self):
         """Start the audio player thread"""
         if self.time_thread and self.time_thread.is_alive():
