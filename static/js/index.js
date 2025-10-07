@@ -27,7 +27,7 @@ class MusicPlayer {
       .then((res) => res.json())
       .then((data) => {
         if ("error" in data) {
-          console.log("Error in song loading")
+          console.log("Error in song loading");
           return;
         }
         console.log("loading song...");
@@ -67,7 +67,7 @@ class MusicPlayer {
   }
 
   syncAudio() {
-    fetch("/get-position")
+    fetch("/get-position", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
