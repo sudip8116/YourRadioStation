@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: flask-audio-app
+    name: app
     env: python
     region: oregon
     plan: free
@@ -9,4 +9,3 @@ services:
     envVars:
       - key: FLASK_ENV
         value: production
-
