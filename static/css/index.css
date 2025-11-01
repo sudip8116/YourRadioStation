@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: url("../images/index-background.jpg") center/cover no-repeat;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+nav {
+  margin-top: 10px;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgb(41, 41, 41);
+  backdrop-filter: blur(5px);
+  border-radius: 20%;
+  border-bottom: 2px solid white;
+}
+nav h1 {
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+}
+
+section {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.circular {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(188, 188, 188, 0.512);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(41, 41, 41, 0.696);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+}
+
+.circular:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgb(142, 255, 251);
+}
+
+.circular img {
+  height: 50%;
+  width: 50%;
+}
+
+.circular h3 {
+  font-weight: lighter;
+  font-size: 25px;
+  color: white;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  section {
+    gap: 20px;
+  }
+
+  .circular {
+    width: 250px;
+    height: 250px;
+  }
+
+  .circular h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  section {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .circular {
+    width: 220px;
+    height: 220px;
+  }
+
+  .circular h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circular {
+    width: 180px;
+    height: 180px;
+  }
+
+  .circular img {
+    width: 60%;
+    height: 60%;
+  }
+
+  .circular h3 {
+    font-size: 18px;
+  }
+}

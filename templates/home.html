@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>0</h1>
+  </body>
+
+  <script>
+    const count = document.querySelector("h1");
+    function update() {
+      fetch("/get-song")
+        .then((res) => res.json())
+        .then((data) => {
+          count.innerText = data.count;
+        });
+
+      setTimeout(() => {
+        update();
+      }, 1000);
+    }
+    update();
+  </script>
+</html>

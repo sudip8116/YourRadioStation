@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Radio Station - Live Radio</title>
+  </head>
+  <link rel="stylesheet" href="/static/css/live-radio.css" />
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+
+  <body>
+    <div id="album-background"></div>
+
+    <div id="player">
+      <div id="pt">
+        <div id="player-album"></div>
+        <div id="player-info">
+          <h2 id="song-title">Loading...</h2>
+          <button id="play-btn">▶</button>
+        </div>
+      </div>
+      <div id="pb">
+        <input
+          type="range"
+          id="time-slider"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+        />
+      </div>
+    </div>
+    <audio src=""></audio>
+  </body>
+  <script src="/static/js/live-radio.js"></script>
+</html>
