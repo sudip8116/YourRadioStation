@@ -38,10 +38,11 @@ def search():
     return jsonify(videos)
 
 
-@app.route("/get-url")
+@app.route("/get-url", methods=["POST"])
 def get_audio_url():
-    data = request.get_json()
-    video_url = data.get("url", None)
+    data = request.get_json(silent=True) or {}
+    video_url = data.get("url")
+
     if not video_url:
         return jsonify({"error": "url parameter missing"}), 400
 
@@ -60,8 +61,3 @@ def get_audio_url():
         "ext": info.get("ext"),
         "filesize": info.get("filesize")
     })
-
-
-#if __name__ == "__main__":
-   # app.run(host="0.0.0.0", port=5000, debug=True)
-    
