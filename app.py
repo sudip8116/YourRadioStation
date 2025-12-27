@@ -40,7 +40,8 @@ def search():
 
 @app.route("/get-url")
 def get_audio_url():
-    video_url = request.args.get("url")
+    data = request.get_json()
+    video_url = data.get("url", None)
     if not video_url:
         return jsonify({"error": "url parameter missing"}), 400
 
