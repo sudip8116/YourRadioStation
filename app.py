@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import yt_dlp
-from pytubefix import Youtube
+from pytubefix import YouTube
 app = Flask(__name__)
 
 @app.route("/")
