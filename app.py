@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import yt_dlp
-
+from pytubefix import Youtube
 app = Flask(__name__)
 
 @app.route("/")
@@ -46,18 +46,23 @@ def get_audio_url():
     if not video_url:
         return jsonify({"error": "url parameter missing"}), 400
 
-    ydl_opts = {
-        "quiet": True,
-        "skip_download": True,
-        "format": "bestaudio/best"
-    }
+    yt = YouTube(video_url)
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(video_url, download=False)
+    audio = (
+        yt.streams
+        .filter(only_audio=True)
+        .order_by("abr")
+        .desc()
+        .first()
+    )
+
+    if not audio:
+        return jsonify({"error": "no audio stream found"}), 404
 
     return jsonify({
-        "title": info.get("title"),
-        "audio_url": info["url"],
-        "ext": info.get("ext"),
-        "filesize": info.get("filesize")
+        "title": yt.title,
+        "audio_url": audio.url,
+        "abr": audio.abr,
+        "mime_type": audio.mime_type,
+        "filesize": audio.filesize
     })
