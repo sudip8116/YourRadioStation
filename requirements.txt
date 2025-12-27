@@ -2,3 +2,4 @@ Flask
 eventlet
 gunicorn
 yt-dlp
+pytubefix
